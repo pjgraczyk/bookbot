@@ -1,3 +1,4 @@
+import sys
 from typing import Dict
 from stats import count_words, get_letter_counts, get_formatted_letter_counts
 
@@ -25,12 +26,16 @@ def format_dict_to_output(dict: Dict, word_count: int, path: str) -> str:
     print("============= END ===============")
     
 def main():
-    path = './books/frankenstein.txt'
-    contents = get_book_text(path)
-    word_count = count_words(contents)
-    letter_counts = get_letter_counts(contents)
-    formatted_letter_counts = get_formatted_letter_counts(letter_counts)
-    format_dict_to_output(formatted_letter_counts, word_count, path)
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    else:
+        path = sys.argv[1]
+        contents = get_book_text(path)    
+        word_count = count_words(contents)    
+        letter_counts = get_letter_counts(contents)    
+        formatted_letter_counts = get_formatted_letter_counts(letter_counts)    
+        format_dict_to_output(formatted_letter_counts, word_count, path)
     
 if __name__ == "__main__":
     main()
