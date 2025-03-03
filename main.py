@@ -1,4 +1,5 @@
-from stats import count_words
+from typing import Dict
+from stats import count_words, get_letter_counts, get_formatted_letter_counts
 
 def get_book_text(path: str) -> str:
     try:
@@ -13,12 +14,23 @@ def get_book_text(path: str) -> str:
 
     return ""
 
+def format_dict_to_output(dict: Dict, word_count: int, path: str) -> str:
+    print("============ BOOKBOT ============")
+    print("Analyzing book found at %s..." % path)
+    print("----------- Word Count ----------")
+    print("Found %d total words" % word_count)
+    print("--------- Character Count -------")
+    for key, value in dict.items():
+        print("%c: %d" % (key,value))
+    print("============= END ===============")
+    
 def main():
     path = './books/frankenstein.txt'
     contents = get_book_text(path)
-    # print(contents)
     word_count = count_words(contents)
-    print('%d words found in the document' % word_count)
-
+    letter_counts = get_letter_counts(contents)
+    formatted_letter_counts = get_formatted_letter_counts(letter_counts)
+    format_dict_to_output(formatted_letter_counts, word_count, path)
+    
 if __name__ == "__main__":
     main()
